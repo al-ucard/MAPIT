@@ -5,7 +5,7 @@
 
 	export let data: { moto: Moto };
 
-  let modalVisible = false;
+	let modalVisible = false;
 
 	function calcularAnios(fechaCompra: string): number {
 		const fecha = new Date(fechaCompra);
@@ -23,13 +23,14 @@
 	}
 
 	const anios = calcularAnios(data.moto.fechaCompra);
-	let precioCalculado = data.moto.precioCompra / (2 ** anios);
+	let precioCalculado = data.moto.precioCompra / 2 ** anios;
 
 	const textoParrafo1 = `El valor mostrado a continuación es una estimación de precio de recompra aproximado, es necesario realizar una tasación en un taller. Por favor, consulta con tu concesionario para obtener una oferta en firme.`;
-  const textoParrafo2 = `El valor calculado de recompra de su motocicleta ` + data.moto.modelo + ` es de:`;
+	const textoParrafo2 =
+		`El valor calculado de recompra de su motocicleta ` + data.moto.modelo + ` es de:`;
 
-  function volverListado() {
-		goto('/motos');  
+	function volverListado() {
+		goto('/motos');
 	}
 
 	function abrirModal() {
@@ -46,21 +47,38 @@
 	<p>{textoParrafo2}</p>
 
 	<p class="precio">€ {precioCalculado.toFixed(2)}</p>
+
+	<MapaMoto lat={data.moto.coordenadas.latitud} lng={data.moto.coordenadas.longitud} />
 </div>
 
-<MapaMoto lat={data.moto.coordenadas.latitud} lng={data.moto.coordenadas.longitud} />
-
 <div class="botones">
-  <button class="volver" type="button" on:click={volverListado}>Volver al listado</button>
-  <button class="solicitar" type="button" on:click={abrirModal}>Solicitar cita</button>
+	<button class="volver" type="button" on:click={volverListado}>Volver al listado</button>
+	<button class="solicitar" type="button" on:click={abrirModal}>Solicitar cita</button>
 </div>
 
 {#if modalVisible}
-	<div class="modal-fondo" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+	<div
+		class="modal-fondo"
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="modalTitle"
+		aria-describedby="modalDesc"
+	>
 		<div class="modal-contenido">
 			<h3 id="modalTitle" class="modal-titulo">Cita solicitada</h3>
-			<p id="modalDesc" class="modal-mensaje">Su concesionario se pondrá en contacto pronto, para concertar cita.</p>
+			<p id="modalDesc" class="modal-mensaje">
+				Su concesionario se pondrá en contacto pronto, para concertar cita.
+			</p>
 			<button type="button" on:click={cerrarModal}>OK</button>
 		</div>
 	</div>
 {/if}
+
+<style>
+	.precio {
+		font-weight: 700;
+		font-size: 3rem;
+		margin: 0.5em 0 0.5em 2rem;
+		color: var(--color-texto-principal);
+	}
+</style>

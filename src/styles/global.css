@@ -35,13 +35,6 @@ body {
   color: var(--color-texto-secundario);
 }
 
-.precio {
-  font-weight: 700;
-  font-size: 3rem;
-  margin: 0.5em 0 1.5em 2rem;
-  color: var(--color-texto-principal);
-}
-
 p {
   margin: 0.8em 0;
 }
