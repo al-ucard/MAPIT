@@ -2,28 +2,14 @@
 	import { goto } from '$app/navigation';
 	import MapaMoto from '$lib/component/MapaMoto.svelte';
 	import type { Moto } from '$lib/types';
+	import { calcularAnios, calcularPrecio } from '$lib/utils';
 
 	export let data: { moto: Moto };
 
 	let modalVisible = false;
 
-	function calcularAnios(fechaCompra: string): number {
-		const fecha = new Date(fechaCompra);
-		const ahora = new Date();
-		let diff = ahora.getFullYear() - fecha.getFullYear();
-
-		if (
-			ahora.getMonth() < fecha.getMonth() ||
-			(ahora.getMonth() === fecha.getMonth() && ahora.getDate() < fecha.getDate())
-		) {
-			diff--;
-		}
-
-		return diff >= 0 ? diff : 0;
-	}
-
 	const anios = calcularAnios(data.moto.fechaCompra);
-	let precioCalculado = data.moto.precioCompra / 2 ** anios;
+	let precioCalculado = calcularPrecio(data.moto.precioCompra, anios);
 
 	const textoParrafo1 = `El valor mostrado a continuación es una estimación de precio de recompra aproximado, es necesario realizar una tasación en un taller. Por favor, consulta con tu concesionario para obtener una oferta en firme.`;
 	const textoParrafo2 =
