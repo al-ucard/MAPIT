@@ -22,6 +22,8 @@
 	});
 </script>
 
+<div bind:this={mapContainer} id="map"></div>
+
 <style>
 	#map {
 		width: 100%;
@@ -30,5 +32,3 @@
 		border-radius: 8px;
 	}
 </style>
-
-<div bind:this={mapContainer} id="map"></div>
